@@ -1,6 +1,14 @@
 //     (c) 2010-2019 Jeremy Ashkenas and DocumentCloud
+//     (c) 2020 JC Brand
 
-import _ from 'lodash';
+import create from 'lodash-es/create';
+import extend from 'lodash-es/extend';
+import has from 'lodash-es/has';
+import isFunction from 'lodash-es/isFunction';
+import isObject from 'lodash-es/isObject';
+import isString from 'lodash-es/isString';
+import matches from 'lodash-es/matches';
+import result from 'lodash-es/result';
 
 // Helpers
 // -------
@@ -16,18 +24,18 @@ export function inherits(protoProps, staticProps) {
     // The constructor function for the new subclass is either defined by you
     // (the "constructor" property in your `extend` definition), or defaulted
     // by us to simply call the parent constructor.
-    if (protoProps && _.has(protoProps, 'constructor')) {
+    if (protoProps && has(protoProps, 'constructor')) {
         child = protoProps.constructor;
     } else {
         child = function(){ return parent.apply(this, arguments); };
     }
 
     // Add static properties to the constructor function, if supplied.
-    _.extend(child, parent, staticProps);
+    extend(child, parent, staticProps);
 
     // Set the prototype chain to inherit from `parent`, without calling
     // `parent`'s constructor function and add the prototype properties.
-    child.prototype = _.create(parent.prototype, protoProps);
+    child.prototype = create(parent.prototype, protoProps);
     child.prototype.constructor = child;
 
     // Set a convenience property in case the parent's prototype is needed
@@ -91,7 +99,7 @@ const methodMap = {
 };
 
 export function getSyncMethod(model) {
-    const store = _.result(model, 'browserStorage') || _.result(model.collection, 'browserStorage');
+    const store = result(model, 'browserStorage') || result(model.collection, 'browserStorage');
     return store ? store.sync() : sync;
 }
 
@@ -115,7 +123,7 @@ export function sync(method, model, options={}) {
 
     // Ensure that we have a URL.
     if (!options.url) {
-        params.url = _.result(model, 'url') || urlError();
+        params.url = result(model, 'url') || urlError();
     }
 
     // Ensure that we have the appropriate request data.
@@ -138,7 +146,7 @@ export function sync(method, model, options={}) {
     };
 
     // Make the request, allowing the user to override any Ajax options.
-    const xhr = options.xhr = ajax(_.extend(params, options));
+    const xhr = options.xhr = ajax(extend(params, options));
     model.trigger('request', model, xhr, options);
     return xhr;
 }
@@ -180,21 +188,21 @@ const addMethod = function(base, length, method, attribute) {
 };
 
 const addUnderscoreMethods = function(Class, base, methods, attribute) {
-    _.each(methods, function(length, method) {
+    methods.forEach(function(length, method) {
         if (base[method]) Class.prototype[method] = addMethod(base, length, method, attribute);
     });
 };
 
 // Support `collection.sortBy('attr')` and `collection.findWhere({id: 1})`.
 const cb = function(iteratee, instance) {
-    if (_.isFunction(iteratee)) return iteratee;
-    if (_.isObject(iteratee) && !instance._isModel(iteratee)) return modelMatcher(iteratee);
-    if (_.isString(iteratee)) return function(model) { return model.get(iteratee); };
+    if (isFunction(iteratee)) return iteratee;
+    if (isObject(iteratee) && !instance._isModel(iteratee)) return modelMatcher(iteratee);
+    if (isString(iteratee)) return function(model) { return model.get(iteratee); };
     return iteratee;
 };
 
 const modelMatcher = function(attrs) {
-    const matcher = _.matches(attrs);
+    const matcher = matches(attrs);
     return function(model) {
         return matcher(model.attributes);
     };

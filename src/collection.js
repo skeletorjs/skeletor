@@ -12,28 +12,26 @@
 // belonging to this particular author, and so on. Collections maintain
 // indexes of their models, both in order, and for lookup by `id`.
 
-import { inherits, getResolveablePromise, getSyncMethod, wrapError } from './helpers.js';
+import clone from 'lodash-es/clone';
+import countBy from 'lodash-es/countBy';
+import difference from 'lodash-es/difference';
+import every from 'lodash-es/every';
+import extend from 'lodash-es/extend';
+import find from 'lodash-es/find';
+import findIndex from 'lodash-es/findIndex';
+import findLastIndex from 'lodash-es/findLastIndex';
+import groupBy from 'lodash-es/groupBy';
+import indexOf from 'lodash-es/indexOf';
+import isEmpty from 'lodash-es/isEmpty';
+import isFunction from 'lodash-es/isFunction';
+import isString from 'lodash-es/isString';
+import keyBy from 'lodash-es/keyBy';
+import lastIndexOf from 'lodash-es/lastIndexOf';
+import some from 'lodash-es/some';
+import sortBy from 'lodash-es/sortBy';
 import { Events } from './events.js';
 import { Model } from './model.js';
-import {
-  clone,
-  countBy,
-  difference,
-  every,
-  extend,
-  find,
-  findIndex,
-  findLastIndex,
-  groupBy,
-  indexOf,
-  isEmpty,
-  isFunction,
-  isString,
-  keyBy,
-  lastIndexOf,
-  some,
-  sortBy,
-} from 'lodash';
+import { inherits, getResolveablePromise, getSyncMethod, wrapError } from './helpers.js';
 
 const slice = Array.prototype.slice;
 

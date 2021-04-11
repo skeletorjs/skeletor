@@ -14,7 +14,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-        'node_modules/lodash/lodash.js',
         'node_modules/sinon/pkg/sinon.js',
         'test/vendor/json2.js',
         'dist/skeletor.js',
@@ -88,7 +87,7 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true,
+    singleRun: false,
 
     // Concurrency level
     // how many browser should be started simultaneous

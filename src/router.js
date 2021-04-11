@@ -5,9 +5,12 @@
 // Router
 // ------
 
-import { Events } from './events.js';
 import History from './history.js';
-import _ from 'lodash';
+import extend from 'lodash-es/extend';
+import isFunction from 'lodash-es/isFunction';
+import isRegExp from 'lodash-es/isRegExp';
+import result from 'lodash-es/result';
+import { Events } from './events.js';
 import { inherits } from './helpers.js';
 
 // Routers map faux-URLs to actions, and fire events when routes are
@@ -30,7 +33,7 @@ const splatParam    = /\*\w+/g;
 const escapeRegExp  = /[\-{}\[\]+?.,\\\^$|#\s]/g;
 
 // Set up all inheritable **Router** properties and methods.
-_.extend(Router.prototype, Events, {
+extend(Router.prototype, Events, {
 
   // preinitialize is an empty function by default. You can override it with a function
   // or object.  preinitialize will run before any instantiation logic is run in the Router.
@@ -47,8 +50,8 @@ _.extend(Router.prototype, Events, {
   //     });
   //
   route: function(route, name, callback) {
-    if (!_.isRegExp(route)) route = this._routeToRegExp(route);
-    if (_.isFunction(name)) {
+    if (!isRegExp(route)) route = this._routeToRegExp(route);
+    if (isFunction(name)) {
       callback = name;
       name = '';
     }
@@ -81,9 +84,9 @@ _.extend(Router.prototype, Events, {
   // routes can be defined at the bottom of the route map.
   _bindRoutes: function() {
     if (!this.routes) return;
-    this.routes = _.result(this, 'routes');
+    this.routes = result(this, 'routes');
     let route;
-    const routes = _.keys(this.routes);
+    const routes = Object.keys(this.routes);
     while ((route = routes.pop()) != null) {
       this.route(route, this.routes[route]);
     }
@@ -106,7 +109,7 @@ _.extend(Router.prototype, Events, {
   // treated as `null` to normalize cross-browser behavior.
   _extractParameters: function(route, fragment) {
     const params = route.exec(fragment).slice(1);
-    return _.map(params, function(param, i) {
+    return params.map(function(param, i) {
       // Don't decode the search params.
       if (i === params.length - 1) return param || null;
       return param ? decodeURIComponent(param) : null;

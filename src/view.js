@@ -13,10 +13,15 @@
 // having to worry about render order ... and makes it easy for the view to
 // react to specific changes in the state of your models.
 
+import extend from 'lodash-es/extend';
+import isElement from 'lodash-es/isElement';
+import isFunction from 'lodash-es/isFunction';
+import pick from 'lodash-es/pick';
+import result from 'lodash-es/result';
+import uniqueId from 'lodash-es/uniqueId';
 import { Events } from './events.js';
-import { addMethodsToObject, inherits, sync, urlError, wrapError } from './helpers.js';
-import { isFunction, extend, isElement, pick, result, uniqueId } from "lodash";
-import { render} from 'lit-html';
+import { inherits, sync, urlError, wrapError } from './helpers.js';
+import { render } from 'lit-html';
 
 const paddedLt = /^\s*</;
 

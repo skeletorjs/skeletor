@@ -13,7 +13,6 @@
 // is automatically generated and assigned for you.
 
 import {
-  addMethodsToObject,
   getResolveablePromise,
   getSyncMethod,
   inherits,
@@ -21,22 +20,20 @@ import {
   wrapError
 } from './helpers.js';
 import { Events } from './events.js';
-import {
-  clone,
-  defaults,
-  defer,
-  escape,
-  extend,
-  has,
-  invert,
-  isEmpty,
-  isEqual,
-  iteratee,
-  omit,
-  pick,
-  result,
-  uniqueId
-} from 'lodash';
+import has from 'lodash-es/has';
+import clone from 'lodash-es/clone';
+import defaults from 'lodash-es/defaults';
+import defer from 'lodash-es/defer';
+import escape from 'lodash-es/escape';
+import extend from 'lodash-es/extend';
+import invert from 'lodash-es/invert';
+import isEmpty from 'lodash-es/isEmpty';
+import isEqual from 'lodash-es/isEqual';
+import iteratee from 'lodash-es/iteratee';
+import omit from 'lodash-es/omit';
+import pick from 'lodash-es/pick';
+import result from 'lodash-es/result';
+import uniqueId from 'lodash-es/uniqueId';
 
 
 export const Model = function(attributes, options) {

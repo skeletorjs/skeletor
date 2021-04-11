@@ -1,4 +1,5 @@
 import { terser } from 'rollup-plugin-terser';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 
 export default [
   {
@@ -8,7 +9,8 @@ export default [
       sourcemap: true,
       file: 'dist/skeletor.js',
       format: 'umd'
-    }
+    },
+    plugins: [nodeResolve()]
   },
   {
     input: 'src/main.js',
@@ -18,6 +20,6 @@ export default [
       file: 'dist/skeletor.min.js',
       format: 'umd'
     },
-    plugins: [terser()]
+    plugins: [nodeResolve(), terser()]
   }
 ];

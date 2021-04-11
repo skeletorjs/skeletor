@@ -2,7 +2,9 @@
  * IndexedDB, localStorage and sessionStorage adapter
  */
 import * as localForage from "localforage";
-import { cloneDeep, isString, result } from 'lodash';
+import cloneDeep from 'lodash-es/cloneDeep';
+import isString from 'lodash-es/isString';
+import result from 'lodash-es/result';
 import sessionStorageWrapper from "./drivers/sessionStorage.js";
 
 
